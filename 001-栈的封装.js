@@ -1,62 +1,45 @@
-/**
- * 封装栈类
- */
-// class Stack {
-//     list = []
-
-//     push(newItem) {
-//         this.list = [newItem, ...this.list]
-//     }
-
-//     pop() {
-//         const [first, ...rest] = this.list
-//         this.list = rest
-//         return first
-//     }
-
-// }
-
 class Stack {
-    items = []
-    push(newItem) {
-        this.items.unshift(newItem)
-        return this.items
+    list = []
+
+    push(val) {
+        this.list.push(val)
     }
+
     pop() {
-        return this.items.shift()
+        return this.list.pop()
     }
 
     peek() {
-        return this.items[0]
+        return this.list[this.list.length - 1]
     }
 
     toString() {
-        return this.items.join(' ')
+        return this.list.join(' , ')
     }
 
-    size = this.items.length
-    isEmpty = this.items.length === 0
+    get size() {
+        return this.list.length
+    }
+
+    get isEmpty() {
+        return this.list.length === 0
+    }
+
 
 }
 
-
 const s = new Stack()
 
-s.push(1)
-s.push(2)
-s.push(3)
-s.push(3)
-s.push(5)
+s.push('sxy')
+
+s.push('sll')
+
+s.push('xc')
+
+s.push('sk')
 
 console.log(s.toString())
-console.log(s.pop())
-console.log(s.toString())
-console.log(s.pop())
-console.log(s.toString())
-console.log(s.pop())
-console.log(s.toString())
-console.log(s.pop())
-console.log(s.toString())
-console.log(s.pop())
-console.log(s.toString())
 
+console.log(s.pop())
+
+console.log(s.toString())
