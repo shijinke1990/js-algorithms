@@ -1,57 +1,104 @@
 class Node {
-    constructor(key) {
-        this.key = key
+    constructor(data) {
+        this.data = data
         this.left = null
         this.right = null
     }
 }
 
 class BinarySearchTree {
-
     root = null
 
-    insert(key) {
-        const newNode = new Node(key)
+    insert(data) {
+        const newNode = new Node(data)
+        const insertNode = (node, newNode) => {
+            if (newNode.data < node.data) {
+                if (node.left === null) {
+                    node.left = newNode
+                } else {
+                    insertNode(node.left, newNode)
+                }
+            } else {
+                if (node.right === null) {
+                    node.right = newNode
+                } else {
+                    insertNode(node.right, newNode)
+                }
+            }
+        }
+
         if (this.root === null) {
             this.root = newNode
         } else {
-            this.insertNode(this.root, newNode)
+            insertNode(this.root, newNode)
         }
     }
 
-    insertNode(baseNode, newNode) {
-        if (newNode.key < baseNode.left) {
-            if (baseNode.left === null) {
-                baseNode.left = newNode
-            } else {
-                this.insertNode(baseNode.left, newNode)
-            }
-        } else {
-            if (baseNode.right === null) {
-                baseNode.right = newNode
-            } else {
-                this.insertNode(baseNode.right, newNode)
-            }
+    min() {
+        let node = this.root
+        while (node.left) {
+            node = node.left
         }
+        return node.data
     }
 
     /**
-     * 先序遍历
+     * 递归方法求最小值
+     * @param {*} node 
      */
-    preOrderTraversal(handle) {
-        this.preOrderTraversalNode(this.root, handle)
-    }
-
-    preOrderTraversalNode(node, handle) {
-        if (node !== null) {
-            handle(node.key)
-            this.preOrderTraversalNode(node.left, handle)
-            this.preOrderTraversalNode(node.right, handle)
+    min2(node) {
+        const minNode = (node) => {
+            if (node == null) {
+                return null
+            }
+            if (node.left === null) {
+                return node.data
+            } else {
+                return minNode(node.left)
+            }
         }
+        return minNode(node || this.root)
     }
 
+    max() {
+        let node = this.root
+        if (node == null) {
+            return null
+        }
+        while (node.right) {
+            node = node.right
+        }
+        return node.data
+    }
 
+    max2(node) {
+        const maxNode = (node) => {
+            if (node === null) {
+                return null
+            } else {
+                if (node.right) {
+                    return maxNode(node.right)
+                } else {
+                    return node.data
+                }
+            }
+        }
+        return maxNode(node || this.root)
+    }
 
+    has(data) {
+        let node = this.root
+        while (node) {
+            if (data < node.data) {
+                node = node.left
+            } else if (data > node.data) {
+                node = node.right
+            } else {
+                return true
+            }
+        }
+        return false
+    }
 
 }
 
@@ -60,6 +107,7 @@ const bst = new BinarySearchTree()
 
 bst.insert(11)
 bst.insert(7)
+bst.insert(11)
 bst.insert(15)
 bst.insert(5)
 bst.insert(3)
@@ -73,8 +121,5 @@ bst.insert(20)
 bst.insert(18)
 bst.insert(25)
 
-console.log(bst)
 
-bst.preOrderTraversal(function (key) {
-    console.log(key)
-})
+console.log(bst.max2())
